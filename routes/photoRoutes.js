@@ -108,7 +108,7 @@ router.post("/add", async (req, res) => {
 //Leadboard
 router.get("/leaderboard", async (req, res) => {
   try {
-    const photos = await Photo.find().sort({ rating: -1 }).limit(10);
+    const photos = await Photo.find().sort({ rating: -1 }).limit(12);
     res.json(photos);
   } catch (err) {
     res.status(500).json({ message: err.message });
