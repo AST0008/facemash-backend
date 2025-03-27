@@ -4,6 +4,11 @@ const Photo = require("../models/photoModel");
 const multer = require("multer");
 const router = express.Router();
 
+const isProduction = process.env.NODE_ENV === "production";
+const deploymentUrl = isProduction
+  ? process.env.DEPLOYMENT_URL
+  : "http://localhost:5000";
+
 // Elo Calculation
 function eloCalculation(winnerRating, loserRating, k = 32) {
   const expectedWinner =
@@ -25,7 +30,7 @@ const upload = multer({ storage });
 
 router.post("/upload", upload.single("photo"), async (req, res) => {
   try {
-    const imageUrl = `http://localhost:5000/uploads/${req.file.filename}`;
+    const imageUrl = `${deploymentUrl}/uploads/${req.file.filename}`;
     const { name } = req.body;
 
     const photo = new Photo({ name, imageUrl });
