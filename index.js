@@ -8,8 +8,15 @@ app.use(cors());
 app.use(express.json());
 app.use("/uploads", express.static("uploads"));
 
+require("dotenv").config();
+
+const isProduction = process.env.NODE_ENV === "production";
+const mongoURI = isProduction
+  ? process.env.PROD_MONGO_URI
+  : process.env.DEV_MONGO_URI;
+
 mongoose
-  .connect("mongodb://localhost:27017/facemash", {
+  .connect(mongoURI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
