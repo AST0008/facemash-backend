@@ -10,6 +10,9 @@ app.use("/uploads", express.static("uploads"));
 
 require("dotenv").config();
 
+const PORT = process.env.PORT || 5000; // Use Render’s assigned port
+app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));
+
 const isProduction = process.env.NODE_ENV === "production";
 const mongoURI = isProduction
   ? process.env.PROD_MONGO_URI
@@ -30,5 +33,5 @@ mongoose
 app.use("/api/photos", photoRoutes);
 
 app.listen(5000, () => {
-  console.log("Server is running on port 3000");
+  console.log("Server is running on port 5000");
 });
